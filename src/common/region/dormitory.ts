@@ -1,0 +1,1 @@
+const dormitoryData = [{"label":"G座","value":"1"},{"label":"H座","value":"2"},{"label":"A座","value":"3"}];export default dormitoryData;

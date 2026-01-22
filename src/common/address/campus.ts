@@ -1,0 +1,1 @@
+const campusData = [{"label":"石牌校区","value":"1"},{"label":"大学城校区","value":"2"},{"label":"南海校区","value":"3"}];export default campusData;

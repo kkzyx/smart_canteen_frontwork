@@ -1,0 +1,1 @@
+const schoolData = [{"label":"华南师范大学","value":"1"},{"label":"天津市","value":"2"}];export default schoolData;
