@@ -148,8 +148,7 @@
 </template>
 
 <script lang="ts" setup>
-// import * as RegionData from "@/common/region";
-import * as SchoolRegion from "@/common/address";
+import * as RegionData from "@/common/region";
 import { PropType } from "vue";
 
 type RegionDataItem = {
@@ -306,7 +305,6 @@ const props = defineProps({
 
 const show = ref(false);
 const tabsIndex = ref(0);
-
 const region = reactive({
   isChooseProvince: false, // 是否选择了 省份
   isChooseCity: false, // 是否选择了 市

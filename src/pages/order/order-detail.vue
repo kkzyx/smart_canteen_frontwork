@@ -587,7 +587,7 @@
 
 <style>
 	page {
-		background-color: #f5f5f5 !important;
+		background: linear-gradient(180deg, #fff8f5 0%, #fff 100%) !important;
 	}
 </style>
 
@@ -618,12 +618,14 @@
 			.other-reason {
 				.u-textarea {
 					padding: 30rpx !important;
-					background-color: #f8f8f8 !important;
+					background-color: #fff8f5 !important;
+					border: 2rpx solid rgba(255, 107, 107, 0.1);
+					border-radius: 12rpx;
 				}
 
 				.u-textarea__count {
 					padding: 0 18rpx 18rpx 0 !important;
-					background-color: #f8f8f8 !important;
+					background-color: #fff8f5 !important;
 				}
 			}
 		}
@@ -649,9 +651,12 @@
 	.countdown {
 		margin: 30rpx 0;
 		.time {
-			color: #ca4545;
+			background: linear-gradient(135deg, #ff9a56 0%, #ff6b6b 100%);
+			-webkit-background-clip: text;
+			-webkit-text-fill-color: transparent;
+			background-clip: text;
 			font-weight: bold;
-			font-size: 45rpx;
+			font-size: 48rpx;
 			font-family: fantasy;
 		}
 	}
@@ -670,8 +675,11 @@
 
 		.pickup-number {
 			font-weight: bold;
-			font-size: 50rpx;
-			color: #ca4545;
+			font-size: 52rpx;
+			background: linear-gradient(135deg, #ff9a56 0%, #ff6b6b 100%);
+			-webkit-background-clip: text;
+			-webkit-text-fill-color: transparent;
+			background-clip: text;
 		}
 	}
 
@@ -700,9 +708,12 @@
 
 		.count {
 			font-family: fantasy;
-			color: #ca4545;
+			background: linear-gradient(135deg, #ff9a56 0%, #ff6b6b 100%);
+			-webkit-background-clip: text;
+			-webkit-text-fill-color: transparent;
+			background-clip: text;
 			font-weight: bold;
-			font-size: 26rpx;
+			font-size: 28rpx;
 			margin: 0 10rpx;
 		}
 
@@ -739,9 +750,9 @@
 		width: 100%;
 		height: $offset-bottom;
 		padding-bottom: 30rpx;
-		background-color: #fff;
-		box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.1);
-		transition: all 0.3s ease-in-out;
+		background: linear-gradient(135deg, #fff8f5 0%, #ffffff 100%);
+		box-shadow: 0 -6rpx 16rpx rgba(255, 107, 107, 0.1);
+		transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 		@include flex-y-center;
 
 		.btn-wrap {

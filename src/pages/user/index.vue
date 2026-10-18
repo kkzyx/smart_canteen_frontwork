@@ -224,9 +224,10 @@
     left: 0;
     width: 100%;
     height: $height;
-    border-radius: 0 0 8% 8%;
+    border-radius: 0 0 10% 10%;
     z-index: -99;
-    background-image: linear-gradient(90deg, #d81e06, #ff4500);
+    background: linear-gradient(135deg, #ff9a56 0%, #ff6b6b 100%);
+    box-shadow: 0 8rpx 24rpx rgba(255, 107, 107, 0.25);
   }
 
   .user-info {
@@ -269,20 +270,22 @@
       display: flex;
       flex-direction: column;
       justify-content: space-around;
-      padding: 20rpx 30rpx;
-      height: 200rpx;
-      border-radius: 20rpx;
-      background-color: #fff;
-      box-shadow: 0 0 10rpx 1rpx #dadada;
+      padding: 24rpx 30rpx;
+      height: 220rpx;
+      border-radius: 24rpx;
+      background: linear-gradient(135deg, #fff8f5 0%, #ffffff 100%);
+      box-shadow: 0 6rpx 20rpx rgba(255, 107, 107, 0.1);
+      border: 2rpx solid rgba(255, 107, 107, 0.1);
       margin: 0 50rpx;
-      transform: translateY(-20rpx);
-      transition: all 0.3s ease-in-out;
+      transform: translateY(-25rpx);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 
       .left-line {
-        height: 30rpx;
-        line-height: 30rpx;
-        padding-left: 10rpx;
-        border-left: 8rpx solid rgb(43, 179, 171);
+        height: 32rpx;
+        line-height: 32rpx;
+        padding-left: 12rpx;
+        border-left: 8rpx solid #ff6b6b;
+        font-weight: 600;
       }
     }
 
@@ -297,17 +300,26 @@
   .my-logout {
     display: flex;
     justify-content: center;
-    margin-top: 50rpx;
+    margin-top: 60rpx;
 
     .logout-btn {
       width: 75%;
       margin: 0 auto;
-      font-size: 28rpx;
-      color: #616161;
-      border-radius: 30rpx;
-      border: 1px solid #dcdcdc;
-      padding: 16rpx 0;
+      font-size: 30rpx;
+      color: #ff6b6b;
+      border-radius: 35rpx;
+      border: 2rpx solid rgba(255, 107, 107, 0.3);
+      padding: 20rpx 0;
       text-align: center;
+      font-weight: 600;
+      background: linear-gradient(135deg, #fff8f5 0%, #ffffff 100%);
+      box-shadow: 0 4rpx 12rpx rgba(255, 107, 107, 0.1);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+      &:active {
+        transform: scale(0.98);
+        box-shadow: 0 2rpx 8rpx rgba(255, 107, 107, 0.15);
+      }
     }
   }
 
@@ -316,24 +328,32 @@
     background-color: #fff;
 
     .cell-item {
-      height: 60rpx;
-      padding: 20rpx 0;
+      height: 70rpx;
+      padding: 24rpx 0;
       display: flex;
       align-items: center;
       justify-content: space-between;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+      &:active {
+        background-color: rgba(255, 107, 107, 0.03);
+      }
 
       .sub-title {
         color: #929292;
       }
 
       &:not(:last-child) {
-        border-bottom: 3rpx solid #f5f3f3;
+        border-bottom: 2rpx solid rgba(255, 107, 107, 0.08);
       }
     }
 
     .left-icon {
-      font-size: 40rpx;
-      color: #f7b418;
+      font-size: 44rpx;
+      background: linear-gradient(135deg, #ff9a56 0%, #ff6b6b 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
   }
 </style>

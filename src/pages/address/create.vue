@@ -262,18 +262,6 @@ const form = reactive<AddressBook>({
   provinceName: "",
   cityName: "",
   districtName: "",
-  // 校园编码 + 校区编码 + 宿舍楼编码
-  schoolCode: "",
-  campusCode: "",
-  dormitoryCode: "",
-  
-  // 学校名字 + 校区名字 + 宿舍楼名字
-  schoolName: "",
-  campusName: "",
-  dormitoryName: "",
-  
-  /** 宿舍房间号 */
-  roomNum: "",
   regions: [],
   sex: AddressEnum.SexEnum.MALE,
   label: AddressEnum.AddressLabelEnum.NO_SELECT,
@@ -380,8 +368,6 @@ const regionVal = computed({
     form.districtName = districtName || "";
   },
 });
-
-
 
 // 设置表单数据显示
 function createFormData(options: UniApp.ChooseAddressRes) {

@@ -7,9 +7,9 @@
 				:current="curTab"
 				lineWidth="35"
 				:scrollable="false"
-				lineColor="#ca4545"
+				lineColor="linear-gradient(135deg, #ff9a56 0%, #ff6b6b 100%)"
 				:activeStyle="{
-					color: '#303133',
+					color: '#ff6b6b',
 					fontWeight: 'bold',
 					transform: 'scale(1.05)',
 				}"
@@ -306,7 +306,7 @@
 	/* #ifndef H5 */
 	page {
 		height: 100%;
-		background-color: #f2f2f2;
+		background: #f5f5f5;
 	}
 
 	/* #endif */
@@ -316,12 +316,13 @@
 	:deep(.order-list) {
 		.u-tabs {
 			.u-tabs__wrapper__nav {
-				padding: 0 20rpx;
+				padding: 0 30rpx;
 			}
 		}
 
 		.u-image {
-			border: 5rpx solid #eee;
+			border: 5rpx solid rgba(255, 107, 107, 0.1);
+			border-radius: 12rpx;
 		}
 
 		.u-empty {
@@ -336,6 +337,7 @@
 		flex-direction: column;
 		height: calc(100vh - var(--window-top));
 		width: 100%;
+		background: #f5f5f5;
 	}
 
 	.order-swiper-container {

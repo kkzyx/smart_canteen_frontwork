@@ -117,165 +117,150 @@
 		</view>
 
 		<!-- 商家推荐 -->
-		<view class="recommend-container">
-			<view class="recommend-header">
-				<text class="f-w f-32">商家推荐</text>
+		<transition name="fade-up">
+			<view class="recommend-section">
+			<view class="section-header">
+				<view class="header-left">
+					<text class="section-title">商家推荐</text>
+					<text class="recommend-count">为你精选</text>
+				</view>
 			</view>
 
-			<view class="recommend-list dis-flex flex-wrap">
-				<!-- 推荐商品 -->
-				<view
-					class="recommend-item"
-					v-for="(item, index) in recommendList"
-					:key="index"
-					style="width: 50%; box-sizing: border-box; padding: 20rpx">
+			<scroll-view scroll-x class="recommend-scroll">
+				<view class="recommend-list">
+					<!-- 推荐商品 -->
 					<view
-						class="recommend-image-container"
+						class="recommend-item"
+						v-for="(item, index) in recommendList"
+						:key="index"
 						@click="handleDishClick(item)">
-						<up-image
-							:src="item.image"
-							width="100%"
-							height="200rpx"
-							radius="10rpx" />
-						<view class="recommend-tag">
-							<text class="tag-text">推荐</text>
-						</view>
-					</view>
-
-					<view class="recommend-info">
-						<text class="dish-name">{{ item.name }}</text>
-
-						<view class="price-container dis-flex flex-y-center">
-							<view
-								class="price-wrap"
-								@click="handleDishClick(item)">
-								<text class="price">¥{{ item.price }}</text>
-								<text class="price-unit">起</text>
+						<view class="recommend-image-wrapper">
+							<up-image
+								:src="item.image"
+								width="100%"
+								height="240rpx"
+								radius="16rpx"
+								mode="aspectFill" />
+							<view class="recommend-badge">
+								<text class="badge-text">推荐</text>
 							</view>
+						</view>
 
-							<view class="action-btn">
-								<view
-									v-if="item.flavors && item.flavors.length > 0"
-									@click.stop="handleDishFlavors(item)"
-									style="position: relative">
-									<up-button
-										type="primary"
-										text="选择规格"
-										size="mini"
-										shape="circle"
-										color="#ca4545" />
-									<up-badge
-										absolute
-										max="99"
-										:offset="[-6, -6]"
-										bgColor="#ca4545"
-										numberType="overflow"
-										:value="shoppingCartStore.getBadgeByItemId(item.id)" />
+						<view class="recommend-info">
+							<text class="dish-name">{{ item.name }}</text>
+
+							<view class="price-action">
+								<view class="price-wrapper">
+									<text class="price-symbol">¥</text>
+									<text class="price-value">{{ item.price }}</text>
 								</view>
-								<text
-									class="btn-text"
-									@click="handleCommentAddCart(item)"
-									v-else
-									>加入购物车</text
-								>
+
+								<view class="action-btn" @click.stop>
+									<view
+										v-if="item.flavors && item.flavors.length > 0"
+										@click="handleDishFlavors(item)"
+										class="spec-btn">
+										<text class="btn-text">选择规格</text>
+										<up-badge
+											absolute
+											max="99"
+											:offset="[-6, -6]"
+											bgColor="#ff6b6b"
+											numberType="overflow"
+											:value="shoppingCartStore.getBadgeByItemId(item.id)" />
+									</view>
+									<view
+										class="add-cart-btn"
+										@click="handleCommentAddCart(item)"
+										v-else>
+										<up-icon name="plus-circle-fill" color="#fff" size="20" />
+									</view>
+								</view>
 							</view>
 						</view>
 					</view>
 				</view>
+			</scroll-view>
 			</view>
-		</view>
+		</transition>
 
 		<!-- 底部操作 -->
 		<view class="bottom-action">
-			<view class="btn-wrap dis-flex flex-y-center flex-x-between">
-				<view class="left">
-					<view
-						class="item"
-						@click="onMoreAction">
-						<up-icon
-							name="more-dot-fill"
-							color="#020202"
-							size="15" />
-						<text class="f-18 mt-10">更多</text>
+			<view class="action-wrapper">
+				<view class="left-actions">
+					<view class="action-item" @click="onMoreAction">
+						<up-icon name="more-dot-fill" color="#333" size="18" />
+						<text class="action-text">更多</text>
 					</view>
-					<view
-						class="item"
-						@click="onService">
-						<up-icon
-							name="server-fill"
-							color="server-fill"
-							size="15" />
-						<text class="f-18 mt-10">客服</text>
+					<view class="action-item" @click="onService">
+						<up-icon name="server-fill" color="#333" size="18" />
+						<text class="action-text">客服</text>
 					</view>
-					<!-- 购物车 -->
-					<view
-						class="item"
-						@click="handleShowCartPopup">
-						<view style="position: relative">
-							<up-icon
-								name="shopping-cart-fill"
-								color="#020202"
-								size="15" />
+					<view class="action-item" @click="handleShowCartPopup">
+						<view class="cart-icon-wrapper">
+							<up-icon name="shopping-cart-fill" color="#333" size="18" />
 							<up-badge
 								absolute
 								:offset="[-14, -10]"
-								type="error"
 								max="99"
 								:value="totalNum"
 								color="#fff"
-								bg-color="#ca4545"
+								:bgColor="'linear-gradient(135deg, #ff9a56 0%, #ff6b6b 100%)'"
 								shape="horn"
-								:show="totalNum > 0"></up-badge>
+								:show="totalNum > 0" />
 						</view>
-						<text class="f-18 mt-10">购物车</text>
+						<text class="action-text">购物车</text>
 					</view>
 				</view>
-				<!-- 加入购物车和立即下单按钮 -->
-				<view
-					v-if="!dish.flavors?.length"
-					class="action-bar">
-					<up-button
-						type="primary"
-						text="加入购物车"
-						color="#FFE278"
-						@click="handleAddCart"
-						:custom-style="{ marginRight: '20rpx' }" />
-					<up-button
-						type="primary"
-						:text="
-							'立即下单￥' +
-							(Object.keys(dish).length > 0 ? dish.price : setmeal.price)
-						"
-						color="#ca4545"
-						@click="onOrdersSubmit"
-						:custom-style="{ marginRight: '20rpx' }">
-					</up-button>
-				</view>
-				<!-- 选择规格 -->
-				<view
-					v-else
-					class="action-bar"
-					@click.stop="handleDishFlavors(dish)"
-					style="position: relative">
-					<up-button
-						type="primary"
-						text="选择规格"
-						shape="circle"
-						:custom-style="{
-							width: '400rpx',
-							height: '80rpx',
-							borderRadius: '20rpx',
-							fontSize: '28rpx',
-						}"
-						color="#ca4545" />
 
-					<up-badge
-						absolute
-						max="99"
-						:offset="[-6, -6]"
-						bgColor="#ca4545"
-						numberType="overflow"
-						:value="shoppingCartStore.getBadgeByItemId(dish.id)" />
+				<view class="right-actions">
+					<view v-if="!dish.flavors?.length" class="action-buttons">
+						<up-button
+							type="primary"
+							text="加入购物车"
+							@click="handleAddCart"
+							:customStyle="{
+								background: 'linear-gradient(135deg, #FFE278 0%, #FFD54F 100%)',
+								borderColor: 'transparent',
+								borderRadius: '30rpx',
+								marginRight: '20rpx',
+								fontWeight: '600'
+							}" />
+						<up-button
+							type="primary"
+							:text="'立即下单 ¥' + (Object.keys(dish).length > 0 ? dish.price : setmeal.price)"
+							@click="onOrdersSubmit"
+							:customStyle="{
+								background: 'linear-gradient(135deg, #ff9a56 0%, #ff6b6b 100%)',
+								borderColor: 'transparent',
+								borderRadius: '30rpx',
+								fontWeight: '600',
+								boxShadow: '0 4rpx 12rpx rgba(255, 107, 107, 0.3)'
+							}" />
+					</view>
+					<view v-else class="spec-button-wrapper" @click.stop="handleDishFlavors(dish)">
+						<up-button
+							type="primary"
+							text="选择规格"
+							shape="circle"
+							:customStyle="{
+								width: '400rpx',
+								height: '88rpx',
+								borderRadius: '44rpx',
+								fontSize: '30rpx',
+								fontWeight: '600',
+								background: 'linear-gradient(135deg, #ff9a56 0%, #ff6b6b 100%)',
+								borderColor: 'transparent',
+								boxShadow: '0 4rpx 12rpx rgba(255, 107, 107, 0.3)'
+							}" />
+						<up-badge
+							absolute
+							max="99"
+							:offset="[-6, -6]"
+							:bgColor="'linear-gradient(135deg, #ff9a56 0%, #ff6b6b 100%)'"
+							numberType="overflow"
+							:value="shoppingCartStore.getBadgeByItemId(dish.id)" />
+					</view>
 				</view>
 			</view>
 		</view>
@@ -351,21 +336,28 @@
 
 	// 获取评论列表
 	const loadComments = async () => {
-		try {
-			const params: CommentDto = {
-				dishId: dish.value.id,
-				setmealId: setmeal.value.id,
-				minDate: new Date(),
-			}
-			const result = await CommentAPI.getCommentList(params)
-			// console.log("获取评论结果:", result.data)
-			comments.value = result.data.records
-			commentTotal.value = result.data.countCommentRepay
-			// console.log("获取评论结果:", comments.value.slice(0, 2))
-		} catch (error) {
-			console.error("获取评论失败:", error)
+	try {
+		// 添加参数验证
+		if (!dish.value.id && !setmeal.value.id) {
+		console.warn('菜品ID或套餐ID不存在，跳过评论加载')
+		return
 		}
+
+		const params: CommentDto = {
+		dishId: dish.value.id,
+		setmealId: setmeal.value.id,
+		minDate: new Date(),
+		}
+		
+		console.log('评论加载参数:', params)
+		const result = await CommentAPI.getCommentList(params)
+		comments.value = result.data.records
+		commentTotal.value = result.data.countCommentRepay
+	} catch (error) {
+		console.error("获取评论失败:", error)
 	}
+	}
+
 
 	// 跳转到评论页面
 	const goToCommentPage = () => {
@@ -379,29 +371,40 @@
 	}
 
 	// 页面加载时获取参数并请求菜品数据
-	onMounted(() => {
-		const pages = getCurrentPages()
-		const currentPage = pages[pages.length - 1]
-		const options = currentPage.options
+	onMounted(async () => {
+	const pages = getCurrentPages()
+	const currentPage = pages[pages.length - 1]
+	const options = currentPage.options
 
-		if (options && options.dish) {
-			const dishParam = JSON.parse(decodeURIComponent(options.dish))
-			if (dishParam.type === CategoryTypeEnum.DISH) {
-				dish.value = dishParam
-				// console.log("dish:", dish.value)
-				ItemViewAPI.incrementDishViewCount(dish.value.id as number)
-			} else {
-				setmeal.value = dishParam
-				fetchSetmealDetail()
-			}
-			// console.log("Received options:", dishParam)
+	// 检查参数是否存在
+	console.log('页面参数:', options)
+	
+	if (options && options.dish) {
+		try {
+		const dishParam = JSON.parse(decodeURIComponent(options.dish))
+		console.log('解析后的菜品参数:', dishParam)
+		
+		if (dishParam.type === CategoryTypeEnum.DISH) {
+			dish.value = dishParam
+			console.log('菜品对象已初始化:', dish.value)
+			ItemViewAPI.incrementDishViewCount(dish.value.id as number)
+		} else {
+			setmeal.value = dishParam
+			console.log('套餐对象已初始化:', setmeal.value)
+			await fetchSetmealDetail()
 		}
+		} catch (error) {
+		console.error('参数解析失败:', error)
+		}
+	} else {
+		console.warn('未接收到dish参数')
+	}
 
-		//获取推荐菜品
-		fetchRecommendDishes()
-		//获取评论
-		loadComments()
+	await fetchRecommendDishes()
+	await loadComments()
 	})
+
+
 
 	//获取套餐详情
 	function fetchSetmealDetail() {
@@ -536,9 +539,13 @@
 		})
 	}
 	// 新增 onShow，在每次页面显示时调用
-	onShow(() => {
-		loadComments()
+	onShow(async () => {
+	// 确保有有效ID才加载评论
+	if (dish.value.id || setmeal.value.id) {
+		await loadComments()
+	}
 	})
+
 
 	// 创建订单，订单确认
 	async function onOrdersSubmit() {
@@ -587,202 +594,411 @@
 
 <style lang="scss" scoped>
 	$offset-bottom: 140rpx;
+	$primary-gradient: linear-gradient(135deg, #ff9a56 0%, #ff6b6b 100%);
+	$card-shadow: 0 6rpx 20rpx rgba(255, 107, 107, 0.1);
+	$card-border: 2rpx solid rgba(255, 107, 107, 0.1);
 
-	@mixin flex-y-center {
-		display: flex;
-		align-items: center;
+	// 过渡动画
+	.fade-up-enter-active,
+	.fade-up-leave-active {
+		transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+	}
+
+	.fade-up-enter-from {
+		opacity: 0;
+		transform: translateY(30rpx);
+	}
+
+	.fade-up-leave-to {
+		opacity: 0;
+		transform: translateY(-30rpx);
 	}
 
 	.dish-detail-page {
 		padding: 30rpx;
-		background-color: #fff;
+		background: linear-gradient(180deg, #fff8f5 0%, #ffffff 100%);
 		min-height: 100vh;
+		padding-bottom: calc($offset-bottom + 30rpx);
 
+		// 菜品图片区域
 		.dish-image-container {
 			margin-bottom: 30rpx;
-		}
+			border-radius: 24rpx;
+			overflow: hidden;
+			box-shadow: $card-shadow;
 
-		.dish-info {
-			margin-bottom: 40rpx;
+			.image-wrapper {
+				position: relative;
+				width: 100%;
+				height: 400rpx;
+				border-radius: 24rpx;
+				overflow: hidden;
 
-			.brand {
-				font-size: 32rpx;
-				font-weight: bold;
-				color: white;
-				border-radius: 10rpx;
-				padding: 5rpx 10rpx;
-				background-color: #000;
-				margin-right: 10rpx;
-				margin-bottom: 10rpx;
-			}
-
-			.setmeal-detail {
-				font-size: 24rpx;
-				color: #8c8c8c;
-				margin-bottom: 10rpx;
-			}
-
-			.dish-name {
-				font-size: 36rpx;
-				font-weight: bold;
-				color: #303133;
-				margin-bottom: 10rpx;
-			}
-
-			.dish-category {
-				font-size: 24rpx;
-				color: #8c8c8c;
-				margin-bottom: 10rpx;
-			}
-
-			.dish-description {
-				font-size: 26rpx;
-				color: #666;
-				// margin-left: 10rpx;
-				line-height: 1.6;
-				margin-bottom: 20rpx;
-			}
-
-			.price {
-				float: right;
-				font-size: 40rpx;
-				font-weight: bold;
-				color: #ca4545;
-			}
-		}
-
-		.action-bar {
-			display: flex;
-			gap: 20rpx;
-			justify-content: flex-end;
-			margin-bottom: 20rpx;
-		}
-
-		//评论
-		.comment-container {
-			margin-bottom: 120rpx;
-
-			.comment-header {
-				margin-bottom: 30rpx;
-
-				.more-comments {
-					&:active {
-						opacity: 0.7;
-					}
+				:deep(.u-image) {
+					border-radius: 24rpx;
 				}
-			}
 
-			.comment-item {
-				padding: 20rpx;
-				background-color: #f8f8f8;
-				border-radius: 10rpx;
+				.image-overlay {
+					position: absolute;
+					bottom: 0;
+					left: 0;
+					right: 0;
+					height: 120rpx;
+					pointer-events: none;
 
-				.comment-content {
-					line-height: 1.5;
-				}
-			}
-		}
-
-		.quantity-control {
-			display: flex;
-			justify-content: center;
-			margin-top: 20rpx;
-		}
-
-		//商家推荐
-		.recommend-container {
-			margin-bottom: 180rpx;
-
-			.recommend-header {
-				margin-bottom: 20rpx;
-
-				.f-w {
-					font-weight: bold;
-				}
-			}
-
-			.recommend-list {
-				display: flex;
-				flex-wrap: wrap;
-				gap: 20rpx;
-				padding-left: 40rpx;
-				// padding-right: 20rpx;
-
-				.recommend-item {
-					flex: 1 1 calc(50% - 10rpx);
-					min-width: 280rpx;
-					max-width: 300rpx;
-					padding: 20rpx;
-					box-sizing: border-box;
-					background-color: #fff;
-					border-radius: 10rpx;
-					box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.1);
-
-					.recommend-image-container {
-						position: relative;
+					.overlay-gradient {
 						width: 100%;
-						height: 200rpx;
-						overflow: hidden;
-						border-radius: 10rpx;
+						height: 100%;
+						background: linear-gradient(to top, rgba(0, 0, 0, 0.3), transparent);
+					}
+				}
+			}
+		}
 
-						.recommend-tag {
-							position: absolute;
-							top: 0rpx;
-							left: 0rpx;
-							background-color: #ff4d4d;
-							color: white;
-							padding: 4rpx 8rpx;
-							border-radius: 4rpx;
-							font-size: 20rpx;
-						}
+		// 菜品信息卡片
+		.dish-info-card {
+			background: #ffffff;
+			border-radius: 24rpx;
+			padding: 32rpx;
+			margin-bottom: 30rpx;
+			box-shadow: $card-shadow;
+			border: $card-border;
+			transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+			.card-header {
+				display: flex;
+				align-items: center;
+				gap: 16rpx;
+				margin-bottom: 24rpx;
+
+				.brand-tag {
+					font-size: 24rpx;
+					font-weight: 600;
+					color: #fff;
+					background: $primary-gradient;
+					padding: 6rpx 16rpx;
+					border-radius: 8rpx;
+					box-shadow: 0 2rpx 8rpx rgba(255, 107, 107, 0.3);
+				}
+
+				.dish-name {
+					font-size: 36rpx;
+					font-weight: 700;
+					color: #333;
+					flex: 1;
+				}
+			}
+
+			.card-body {
+				.description-section,
+				.info-row {
+					margin-bottom: 20rpx;
+				}
+
+				.section-label {
+					display: block;
+					font-size: 26rpx;
+					color: #999;
+					margin-bottom: 8rpx;
+				}
+
+				.dish-description {
+					font-size: 28rpx;
+					color: #666;
+					line-height: 1.6;
+				}
+
+				.setmeal-dishes {
+					display: flex;
+					flex-wrap: wrap;
+					gap: 12rpx;
+
+					.dish-tag {
+						display: inline-block;
+						padding: 8rpx 16rpx;
+						background: linear-gradient(135deg, #fff8f5 0%, #ffffff 100%);
+						border: 2rpx solid rgba(255, 107, 107, 0.15);
+						border-radius: 8rpx;
+						font-size: 24rpx;
+						color: #666;
+					}
+				}
+
+				.category-text {
+					font-size: 28rpx;
+					color: #666;
+				}
+			}
+
+			.card-footer {
+				margin-top: 24rpx;
+				padding-top: 24rpx;
+				border-top: 2rpx solid rgba(255, 107, 107, 0.1);
+
+				.price-wrapper {
+					display: flex;
+					align-items: baseline;
+
+					.price-symbol {
+						font-size: 32rpx;
+						font-weight: 600;
+						background: $primary-gradient;
+						-webkit-background-clip: text;
+						-webkit-text-fill-color: transparent;
+						background-clip: text;
 					}
 
-					.recommend-info {
-						margin-top: 10rpx;
+					.price-value {
+						font-size: 48rpx;
+						font-weight: 700;
+						background: $primary-gradient;
+						-webkit-background-clip: text;
+						-webkit-text-fill-color: transparent;
+						background-clip: text;
+						margin-left: 4rpx;
+					}
+				}
+			}
+		}
 
-						.dish-name {
-							font-size: 30rpx;
-							font-weight: bold;
-							color: #303133;
-							line-height: 1.4;
-							margin-bottom: 10rpx;
-						}
+		// 评论区域
+		.comment-section {
+			background: #ffffff;
+			border-radius: 24rpx;
+			padding: 32rpx;
+			margin-bottom: 30rpx;
+			box-shadow: $card-shadow;
+			border: $card-border;
 
-						.dish-meta {
-							font-size: 24rpx;
-							color: #8c8c8c;
-							margin-bottom: 10rpx;
-						}
+			.section-header {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				margin-bottom: 24rpx;
 
-						.price-container {
+				.header-left {
+					.section-title {
+						font-size: 32rpx;
+						font-weight: 700;
+						color: #333;
+						margin-right: 12rpx;
+					}
+
+					.comment-count {
+						font-size: 24rpx;
+						color: #999;
+					}
+				}
+
+				.header-right {
+					display: flex;
+					align-items: center;
+					gap: 8rpx;
+					padding: 8rpx 16rpx;
+					background: linear-gradient(135deg, #fff8f5 0%, #ffffff 100%);
+					border-radius: 20rpx;
+					border: 2rpx solid rgba(255, 107, 107, 0.15);
+					transition: all 0.3s ease;
+
+					&:active {
+						transform: scale(0.95);
+						background: linear-gradient(135deg, #fff 0%, #fff8f5 100%);
+					}
+
+					.more-text {
+						font-size: 24rpx;
+						color: #ff6b6b;
+					}
+				}
+			}
+
+			.comment-list {
+				.comment-item {
+					padding: 24rpx;
+					background: linear-gradient(135deg, #fff8f5 0%, #ffffff 100%);
+					border-radius: 16rpx;
+					margin-bottom: 16rpx;
+					border: 2rpx solid rgba(255, 107, 107, 0.08);
+					transition: all 0.3s ease;
+
+					&:active {
+						transform: translateY(-2rpx);
+						box-shadow: 0 4rpx 12rpx rgba(255, 107, 107, 0.15);
+					}
+
+					.comment-user {
+						display: flex;
+						align-items: center;
+						gap: 16rpx;
+						margin-bottom: 16rpx;
+
+						.user-info {
 							display: flex;
-							align-items: center;
-							justify-content: space-between;
+							flex-direction: column;
+							gap: 4rpx;
 
-							.price-wrap .price {
-								font-size: 32rpx;
-								font-weight: bold;
-								color: #ca4545;
+							.user-name {
+								font-size: 28rpx;
+								font-weight: 600;
+								color: #333;
 							}
 
-							.price-wrap .price-unit {
-								font-size: 24rpx;
-								color: #8c8c8c;
+							.comment-time {
+								font-size: 22rpx;
+								color: #999;
+							}
+						}
+					}
+
+					.comment-content {
+						font-size: 26rpx;
+						color: #666;
+						line-height: 1.6;
+					}
+				}
+
+				.no-comments {
+					display: flex;
+					flex-direction: column;
+					align-items: center;
+					padding: 60rpx 0;
+
+					image {
+						width: 200rpx;
+						height: 200rpx;
+						margin-bottom: 20rpx;
+					}
+
+					.no-comment-text {
+						font-size: 26rpx;
+						color: #999;
+					}
+				}
+			}
+		}
+
+		// 推荐区域
+		.recommend-section {
+			margin: 25rpx 30rpx;
+			padding: 28rpx;
+			background: linear-gradient(135deg, #fff8f5 0%, #ffffff 100%);
+			border-radius: 28rpx;
+			box-shadow: 0 6rpx 20rpx rgba(255, 107, 107, 0.1);
+			border: 2rpx solid rgba(255, 107, 107, 0.15);
+
+			.section-header {
+				margin-bottom: 24rpx;
+
+				.header-left {
+					.section-title {
+						font-size: 30rpx;
+						font-weight: 700;
+						color: #333;
+						padding-left: 12rpx;
+						border-left: 8rpx solid #ff6b6b;
+						line-height: 1.2;
+					}
+
+					.recommend-count {
+						font-size: 24rpx;
+						color: #999;
+					}
+				}
+			}
+
+			.recommend-scroll {
+				white-space: nowrap;
+
+				.recommend-list {
+					display: flex;
+					gap: 24rpx;
+
+					.recommend-item {
+						display: inline-block;
+						width: 290rpx;
+						background: #ffffff;
+						border-radius: 20rpx;
+						padding: 24rpx;
+						box-shadow: 0 6rpx 16rpx rgba(255, 107, 107, 0.08);
+						border: 2rpx solid rgba(255, 107, 107, 0.1);
+						transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+						&:active {
+							transform: translateY(-6rpx);
+							box-shadow: 0 10rpx 24rpx rgba(255, 107, 107, 0.15);
+						}
+
+						.recommend-image-wrapper {
+							margin-bottom: 18rpx;
+							border-radius: 14rpx;
+							overflow: hidden;
+						}
+
+						.recommend-info {
+							.dish-name {
+								display: block;
+								font-size: 30rpx;
+								font-weight: 700;
+								color: #333;
+								margin-bottom: 12rpx;
+							}
+
+							.price-action {
+								display: flex;
+								align-items: center;
+								justify-content: space-between;
+
+								.price-wrapper {
+									.price-symbol {
+										font-size: 24rpx;
+										font-weight: 600;
+										color: #ff6b6b;
+									}
+
+									.price-value {
+										font-size: 32rpx;
+										font-weight: 700;
+										color: #ff6b6b;
+									}
+								}
 							}
 
 							.action-btn {
-								width: 110rpx;
-								height: 40rpx;
-								background-color: #ca4545;
-								border-radius: 20rpx;
-								display: flex;
-								align-items: center;
-								justify-content: center;
-								color: white;
-								font-size: 20rpx;
+								.spec-btn {
+									position: relative;
+									padding: 12rpx 24rpx;
+									background: linear-gradient(135deg, #ff9a56 0%, #ff6b6b 100%);
+									border-radius: 24rpx;
+									box-shadow: 0 4rpx 12rpx rgba(255, 107, 107, 0.3);
+									transition: all 0.3s ease;
 
-								&:active {
-									opacity: 0.8;
+									&:active {
+										transform: scale(0.95);
+										box-shadow: 0 2rpx 8rpx rgba(255, 107, 107, 0.2);
+									}
+
+									.btn-text {
+										font-size: 24rpx;
+										color: #fff;
+										font-weight: 600;
+									}
+								}
+
+								.add-cart-btn {
+									width: 56rpx;
+									height: 56rpx;
+									background: linear-gradient(135deg, #ff9a56 0%, #ff6b6b 100%);
+									border-radius: 50%;
+									display: flex;
+									align-items: center;
+									justify-content: center;
+									box-shadow: 0 4rpx 12rpx rgba(255, 107, 107, 0.3);
+									transition: all 0.3s ease;
+
+									&:active {
+										transform: scale(0.9);
+										box-shadow: 0 2rpx 8rpx rgba(255, 107, 107, 0.2);
+									}
 								}
 							}
 						}
@@ -791,72 +1007,66 @@
 			}
 		}
 
-		// 购物车弹出层
-		.cart-header {
-			flex: 1;
-			max-height: 50rpx;
-			height: auto;
-		}
-
-		.cart-dish-item {
-			display: flex;
-			max-height: 85px;
-
-			.cart-dish-image {
-				margin-right: 25rpx;
-			}
-
-			.cart-dish-info {
-				display: flex;
-				flex-direction: column;
-				justify-content: space-between;
-
-				.dish-name {
-					font-weight: bold;
-					font-size: 28rpx;
-					margin-bottom: 10rpx;
-				}
-
-				.dish-desc {
-					font-size: 20rpx;
-					color: #ababab;
-				}
-			}
-		}
-
+		// 底部操作栏
 		.bottom-action {
 			position: fixed;
 			bottom: 0;
 			left: 0;
 			width: 100%;
 			height: $offset-bottom;
-			padding-bottom: 30rpx;
-			background-color: #fff;
-			box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.1);
-			transition: all 0.3s ease-in-out;
-			@include flex-y-center;
+			padding-bottom: env(safe-area-inset-bottom);
+			background: #ffffff;
+			box-shadow: 0 -4rpx 16rpx rgba(0, 0, 0, 0.08);
+			z-index: 100;
 
-			.btn-wrap {
-				width: 100%;
-				padding: 0 40rpx;
+			.action-wrapper {
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				height: 100%;
+				padding: 0 30rpx;
 
-				.left {
-					@include flex-y-center;
+				.left-actions {
+					display: flex;
+					align-items: center;
+					gap: 32rpx;
 
-					.item {
-						padding: 10rpx;
-						@include flex-y-center;
-						justify-content: center;
+					.action-item {
+						display: flex;
 						flex-direction: column;
+						align-items: center;
+						gap: 6rpx;
+						transition: all 0.3s ease;
 
-						&:first-child {
-							margin-right: 10rpx;
+						&:active {
+							transform: scale(0.9);
+						}
+
+						.cart-icon-wrapper {
+							position: relative;
+						}
+
+						.action-text {
+							font-size: 22rpx;
+							color: #333;
 						}
 					}
 				}
 
-				.right {
-					@include flex-y-center;
+				.right-actions {
+					display: flex;
+					align-items: center;
+					gap: 16rpx;
+
+					.action-buttons {
+						display: flex;
+						align-items: center;
+						gap: 16rpx;
+					}
+
+					.spec-button-wrapper {
+						position: relative;
+					}
 				}
 			}
 		}

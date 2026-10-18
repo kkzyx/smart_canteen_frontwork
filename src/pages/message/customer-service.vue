@@ -176,7 +176,7 @@
 
 	// 连接WebSocket
 	const connectWebSocket = () => {
-		const wsUrl = `ws://localhost:8848/ws/customer-service/${sessionId.value}/user`
+		const wsUrl = `${import.meta.env.VITE_APP_API_URL.replace(/^http/, "ws")}/ws/customer-service/${sessionId.value}/user`
 
 		websocket = uni.connectSocket({
 			url: wsUrl,

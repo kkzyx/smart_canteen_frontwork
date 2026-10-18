@@ -187,17 +187,22 @@
 <style lang="scss" scoped>
 	.order-card {
 		width: 710rpx;
-		background-color: #ffffff;
+		background: #ffffff;
 		margin: 20rpx auto;
-		border-radius: 20rpx;
+		border-radius: 24rpx;
 		box-sizing: border-box;
-		padding: 30rpx;
+		padding: 32rpx;
 		font-size: 28rpx;
+		box-shadow: 0 4rpx 16rpx rgba(255, 107, 107, 0.08);
+		border: 2rpx solid rgba(255, 107, 107, 0.1);
 		.top {
 			display: flex;
 			justify-content: space-between;
 			.left {
 				flex: 3;
+				font-size: 30rpx;
+				font-weight: 700;
+				color: #333;
 			}
 			.right {
 				flex: 1;
@@ -205,26 +210,29 @@
 				align-items: center;
 				justify-content: flex-end;
 				.status {
-					font-size: 25rpx;
+					font-size: 26rpx;
 					margin-right: 10rpx;
+					color: #ff6b6b;
+					font-weight: 600;
 				}
 			}
 		}
 
 		.time-info {
 			.order-time {
-				font-size: 25rpx;
-				color: #777777;
-				margin: 10rpx 0 20rpx 0;
+				font-size: 26rpx;
+				color: #999;
+				margin: 12rpx 0 20rpx 0;
 			}
 
 			text {
-				font-size: 25rpx;
+				font-size: 26rpx;
+				color: #666;
 			}
 
 			.count-down-text {
-				color: #a32435;
-				font-weight: bold;
+				color: #ff6b6b;
+				font-weight: 700;
 			}
 		}
 
@@ -251,8 +259,8 @@
 					}
 					.item-name {
 						margin-top: 10rpx;
-						font-size: 25rpx;
-						color: #777777;
+						font-size: 26rpx;
+						color: #666;
 						text-align: center;
 					}
 				}
@@ -272,21 +280,21 @@
 				box-shadow: -20rpx 0 50rpx 20rpx white;
 
 				.price {
-					font-weight: bold;
-					font-size: 35rpx;
-					font-family: fantasy;
+					font-weight: 700;
+					font-size: 36rpx;
+					color: #ff6b6b;
 				}
 				.total {
-					margin-top: 15rpx;
-					font-size: 22rpx;
-					color: #999999;
+					margin-top: 12rpx;
+					font-size: 24rpx;
+					color: #999;
 				}
 			}
 		}
 
 		.bottom {
 			display: flex;
-			margin-top: 20rpx;
+			margin-top: 24rpx;
 			padding: 0 10rpx;
 			justify-content: flex-end;
 			align-items: center;
@@ -294,21 +302,27 @@
 				margin-right: auto;
 			}
 			.btn {
-				line-height: 52rpx;
+				line-height: 56rpx;
 				width: 160rpx;
-				border-radius: 26rpx;
-				border: 2rpx solid #f1a532;
+				border-radius: 28rpx;
+				border: 2rpx solid #ff6b6b;
 				font-size: 26rpx;
 				text-align: center;
-				color: #f1a532;
+				color: #ff6b6b;
+				transition: all 0.3s ease;
 				&:not(:last-child) {
 					margin-right: 20rpx;
+				}
+				&:active {
+					background: linear-gradient(135deg, #ff9a56 0%, #ff6b6b 100%);
+					color: #fff;
+					border-color: transparent;
 				}
 			}
 
 			.evaluate {
-				color: #f1a532;
-				border-color: #f1a532;
+				color: #ff6b6b;
+				border-color: #ff6b6b;
 			}
 		}
 	}

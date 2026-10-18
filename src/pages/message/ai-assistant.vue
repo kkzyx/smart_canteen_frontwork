@@ -591,7 +591,7 @@
 
 	// 连接WebSocket
 	const connectWebSocket = () => {
-		const wsUrl = `ws://localhost:8848/ws/customer-service/${sessionId.value}/user`
+		const wsUrl = `${import.meta.env.VITE_APP_API_URL.replace(/^http/, "ws")}/ws/customer-service/${sessionId.value}/user`
 
 		websocket = uni.connectSocket({
 			url: wsUrl,
@@ -763,7 +763,7 @@
 
 	function startWeixinStream(chatData: AiChatDTO, aiMessage: any) {
 		requestTask = uni.request({
-			url: "http://localhost:8848/client/ai-assistant/chat",
+			url: `${import.meta.env.VITE_APP_API_URL}/client/ai-assistant/chat`,
 			method: "POST",
 			header: {
 				authentication: uni.getStorageSync("token"),

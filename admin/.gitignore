@@ -1,0 +1,9 @@
+node_modules/
+dist/
+.idea/
+.vscode/
+.husky/
+*.local
+*.log
+.env
+.DS_Store

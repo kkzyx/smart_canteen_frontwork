@@ -86,14 +86,14 @@ function onNavigateBack(delta: number = 1) {
 .container {
   padding: 0 60rpx;
   font-size: 32rpx;
-  background: #fff;
+  background: linear-gradient(180deg, #fff8f5 0%, #fff 100%);
   min-height: 100vh;
 }
 
 .authorize {
   .store-info {
     padding: 80rpx 0 48rpx;
-    border-bottom: 1rpx solid #e3e3e3;
+    border-bottom: 2rpx solid rgba(255, 107, 107, 0.1);
     margin-bottom: 70rpx;
     text-align: center;
 
@@ -104,7 +104,7 @@ function onNavigateBack(delta: number = 1) {
       margin: 0 auto 0;
       border-radius: 50%;
       overflow: hidden;
-      box-shadow: 2rpx 0 10rpx rgba(50, 50, 50, 0.3);
+      box-shadow: 0 8rpx 24rpx rgba(255, 107, 107, 0.2);
 
       .image {
         display: block;
@@ -116,13 +116,14 @@ function onNavigateBack(delta: number = 1) {
   }
 
   .auth-title {
-    color: #585858;
-    font-size: 34rpx;
+    color: #333;
+    font-size: 36rpx;
+    font-weight: 600;
     margin-bottom: 40rpx;
   }
 
   .auth-subtitle {
-    color: #888;
+    color: #999;
     margin-bottom: 80rpx;
     font-size: 28rpx;
   }
@@ -133,28 +134,42 @@ function onNavigateBack(delta: number = 1) {
 
   .button {
     width: 100%;
-    height: 86rpx;
-    background: linear-gradient(270deg, #ffaf65 0%, #ff795b 100%);
+    height: 88rpx;
+    background: linear-gradient(135deg, #ff9a56 0%, #ff6b6b 100%);
     color: #fff;
-    font-size: 30rpx;
-    border-radius: 80rpx;
+    font-size: 32rpx;
+    font-weight: 600;
+    border-radius: 44rpx;
     letter-spacing: 5rpx;
     display: flex;
     justify-content: center;
     align-items: center;
+    box-shadow: 0 6rpx 16rpx rgba(255, 107, 107, 0.3);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+    &:active {
+      transform: scale(0.98);
+      box-shadow: 0 4rpx 12rpx rgba(255, 107, 107, 0.25);
+    }
   }
 }
 
 .no-login-btn {
   .button {
-    height: 86rpx;
-    background: #dfdfdf;
-    color: #fff;
+    height: 88rpx;
+    background: linear-gradient(135deg, #f0f0f0 0%, #e0e0e0 100%);
+    color: #666;
     font-size: 30rpx;
-    border-radius: 80rpx;
+    font-weight: 500;
+    border-radius: 44rpx;
     display: flex;
     justify-content: center;
     align-items: center;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+    &:active {
+      transform: scale(0.98);
+    }
   }
 }
 </style>

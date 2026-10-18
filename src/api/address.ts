@@ -74,18 +74,14 @@ export default AddressAPI;
 export interface AddressBook {
   /** 地址簿id */
   id?: number;
-  /** 用户id（一般由后端注入，前端可不传） */
+  /** 用户id */
   userId?: number;
-
   /** 收货人 */
   consignee?: string;
   /** 手机号 */
   phone?: string;
   /** 性别 0 女 1 男 */
   sex?: AddressEnum.SexEnum;
-
-  /* ===== 行政区地址（兼容旧逻辑） ===== */
-
   /** 省级区划编号 */
   provinceCode?: string;
   /** 省级名称 */
@@ -98,37 +94,12 @@ export interface AddressBook {
   districtCode?: string;
   /** 区级名称 */
   districtName?: string;
-
-  /* ===== 校园地址（新） ===== */
-
-  /** 学校编码 */
-  schoolCode?: string;
-  /** 学校名称 */
-  schoolName?: string;
-
-  /** 校区编码 */
-  campusCode?: string;
-  /** 校区名称 */
-  campusName?: string;
-
-  /** 宿舍楼编码 */
-  dormitoryCode?: string;
-  /** 宿舍楼名称 */
-  dormitoryName?: string;
-
-  /** 宿舍房间号 */
-  roomNum?: string;
-
-  /* ===== 其他 ===== */
-
   /** 详细地址 */
   detail?: string;
   /** 标签 */
   label?: AddressEnum.AddressLabelEnum;
   /** 是否为默认地址 0否 1是 */
   isDefault?: AddressEnum.AddressTypeEnum;
-
-  /** 地区 code 数组（省 / 市 / 区 或 校园级联） */
+  /** 地区 code 数组 */ 
   regions?: string[];
 }
-

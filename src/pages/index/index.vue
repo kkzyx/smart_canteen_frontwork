@@ -1,46 +1,46 @@
 <template>
 	<view class="order">
-		<view class="logo-header dis-flex flex-y-center flex-x-between">
+		<view class="logo-header">
 			<view class="logo">
 				<view class="custom-logo">
 					<view class="logo-text">
-						<text class="logo-main">中区食堂</text>
+						<text class="logo-main">食堂</text>
 						<text class="logo-sub">CENTRAL CANTEEN</text>
 					</view>
 				</view>
 			</view>
 
-			<view class="dis-flex flex-dir-column store_info">
-				<view class="dis-flex flex-y-center">
+			<view class="store_info">
+				<view class="store-header">
 					<up-tag
 						:text="isOperating ? '营业中' : '休息中'"
 						size="mini"
 						:type="isOperating ? 'error' : 'info'"
-						:bg-color="isOperating ? '#ca4545' : ''"
+						:customStyle="{
+							background: isOperating 
+								? 'linear-gradient(135deg, #ff9a56 0%, #ff6b6b 100%)' 
+								: '#ccc',
+							borderColor: 'transparent',
+							boxShadow: isOperating 
+								? '0 2rpx 8rpx rgba(102, 126, 234, 0.3)' 
+								: 'none',
+						}"
 						borderColor="transparent" />
-					<text class="store_name">中区食堂</text>
+					<text class="store_name">食堂</text>
 					<up-icon
 						name="arrow-right"
 						color="#000"
 						size="15"></up-icon>
 				</view>
 
-				<view class="bottom">
-					<text
-						class="f-20"
-						style="color: #b4b4b4"
-						>距离您500m</text
-					>
-					<text
-						class="f-20"
-						style="margin: 0 5rpx; color: #b4b4b4"
-						>|</text
-					>
-					<text
-						class="f-20"
-						style="color: #b4b4b4"
-						></text
-					>
+				<view class="store-bottom">
+					<view class="info-item">
+						<text>距离您500m</text>
+					</view>
+					<view class="info-item">
+						<up-icon name="clock" color="rgba(255,255,255,0.9)" size="14" />
+						<text>营业时间 10:00-20:00</text>
+					</view>
 				</view>
 			</view>
 		</view>
@@ -116,9 +116,10 @@
 										size="mini"
 										@click.stop="addToCart(item)"
 										:customStyle="{
-											backgroundColor: '#ca4545',
-											borderColor: '#ca4545',
-											borderRadius: '15rpx',
+											background: 'linear-gradient(135deg, #ff9a56 0%, #ff6b6b 100%)',
+											borderColor: 'transparent',
+											borderRadius: '20rpx',
+											boxShadow: '0 4rpx 12rpx rgba(255, 107, 107, 0.3)',
 										}">
 										加购物车
 									</up-button>
@@ -131,13 +132,20 @@
 											text="选择规格"
 											size="mini"
 											shape="circle"
-											color="#ca4545" />
+											:customStyle="{
+												background: 'linear-gradient(135deg, #ff9a56 0%, #ff6b6b 100%)',
+												borderColor: 'transparent',
+												boxShadow: '0 4rpx 12rpx rgba(255, 107, 107, 0.3)',
+											}" />
 
 										<up-badge
 											absolute
 											max="99"
 											:offset="[-6, -6]"
-											bgColor="#ca4545"
+											:customStyle="{
+												background: 'linear-gradient(135deg, #ff9a56 0%, #ff6b6b 100%)',
+												boxShadow: '0 2rpx 8rpx rgba(102, 126, 234, 0.3)',
+											}"
 											numberType="overflow"
 											:value="shoppingCartStore.getBadgeByItemId(item.id)" />
 									</view>
@@ -154,15 +162,15 @@
 				<up-tabs
 					:list="tabsList"
 					lineWidth="35"
-					lineColor="#ca4545"
+					lineColor="linear-gradient(135deg, #ff9a56 0%, #ff6b6b 100%)"
 					@change="handleTabChange"
 					:activeStyle="{
-						color: '#303133',
-						fontWeight: 'bold',
+						color: '#ff6b6b',
+						fontWeight: '600',
 						transform: 'scale(1.05)',
 					}"
 					:inactiveStyle="{
-						color: '#606266',
+						color: '#999',
 						transform: 'scale(1)',
 					}" />
 			</up-sticky>
@@ -199,26 +207,25 @@
 						v-for="(dish, i) in dishList"
 						@click="handleDishClick(dish)"
 						:key="i">
-						<view class="dish-image w-100px h-100px">
+						<view class="dish-image">
 							<up-image
 								show-loading
 								:src="dish.image"
-								width="100px"
-								height="100px"
-								:radius="5" />
+								width="110px"
+								height="110px"
+								:radius="8" />
 						</view>
 
-						<view
-							class="dish-info dis-flex flex-dir-column flex-x-between w-full">
-							<view class="mb-10">
-								<view class="dish-name mb-13">{{ dish.name }}</view>
+						<view class="dish-info">
+							<view class="dish-content">
+								<view class="dish-name">{{ dish.name }}</view>
 								<view
 									class="dish-desc-tag"
 									v-if="dish.description"
 									>{{ dish.description }}</view
 								>
 							</view>
-							<view class="dis-flex flex-y-center flex-x-between">
+							<view class="dish-action">
 								<view class="dish-price">
 									<text class="f-20 f-w">￥</text>
 									<text class="f-32 f-w">{{ dish.price }}</text>
@@ -237,7 +244,7 @@
 												@click="handleSubCart(dish)">
 												<up-icon
 													name="minus-circle"
-													color="#ca4545"
+													color="#ff6b6b"
 													size="20" />
 											</view>
 										</template>
@@ -256,7 +263,7 @@
 												@click="handleAddCart(dish)">
 												<up-icon
 													name="plus-circle-fill"
-													color="#ca4545"
+													color="#ff6b6b"
 													size="20"></up-icon>
 											</view>
 										</template>
@@ -272,13 +279,20 @@
 										text="选择规格"
 										size="mini"
 										shape="circle"
-										color="#ca4545" />
+										:customStyle="{
+											background: 'linear-gradient(135deg, #ff9a56 0%, #ff6b6b 100%)',
+											borderColor: 'transparent',
+											boxShadow: '0 4rpx 12rpx rgba(255, 107, 107, 0.3)',
+										}" />
 
 									<up-badge
 										absolute
 										max="99"
 										:offset="[-6, -6]"
-										bgColor="#ca4545"
+										:customStyle="{
+											background: 'linear-gradient(135deg, #ff9a56 0%, #ff6b6b 100%)',
+											boxShadow: '0 2rpx 8rpx rgba(102, 126, 234, 0.3)',
+										}"
 										numberType="overflow"
 										:value="shoppingCartStore.getBadgeByItemId(dish.id)" />
 								</view>
@@ -314,7 +328,10 @@
 							max="99"
 							:value="totalNum"
 							color="#fff"
-							bg-color="#ca4545"
+							:customStyle="{
+								background: 'linear-gradient(135deg, #ff9a56 0%, #ff6b6b 100%)',
+								boxShadow: '0 2rpx 8rpx rgba(102, 126, 234, 0.3)',
+							}"
 							shape="horn"></up-badge>
 					</view>
 					<view class="total-price dis-flex flex-y-center">
@@ -338,7 +355,11 @@
 					<up-button
 						type="error"
 						text="去下单"
-						color="#ca4545"
+						:customStyle="{
+							background: 'linear-gradient(135deg, #ff9a56 0%, #ff6b6b 100%)',
+							borderColor: 'transparent',
+							boxShadow: '0 4rpx 12rpx rgba(255, 107, 107, 0.3)',
+						}"
 						shape="circle"
 						:disabled="totalNum <= 0"
 						@click="onOrdersSubmit"
@@ -1113,10 +1134,27 @@
 	}
 
 	.logo-header {
-		padding: 30rpx 0;
+		padding: 40rpx 30rpx;
+		background: linear-gradient(135deg, #ff9a56 0%, #ff6b6b 100%);
+		box-shadow: 0 8rpx 24rpx rgba(255, 107, 107, 0.25);
+		position: relative;
+		overflow: hidden;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+
+		&::before {
+			content: '';
+			position: absolute;
+			top: -50%;
+			right: -20%;
+			width: 400rpx;
+			height: 400rpx;
+			background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 70%);
+			border-radius: 50%;
+		}
 
 		.logo {
-			padding-left: 30rpx;
 			display: flex;
 			align-items: center;
 
@@ -1130,94 +1168,140 @@
 					align-items: flex-start;
 
 					.logo-main {
-						font-size: 36rpx;
-						font-weight: bold;
-						color: #2c3e50;
-						background: linear-gradient(135deg, #ca4545 0%, #e74c3c 100%);
-						-webkit-background-clip: text;
-						-webkit-text-fill-color: transparent;
-						background-clip: text;
-						text-shadow: 0 2rpx 4rpx rgba(202, 69, 69, 0.1);
-						line-height: 1.2;
+						font-size: 42rpx;
+						font-weight: 800;
+						color: #ffffff;
+						line-height: 1.3;
+						letter-spacing: 3rpx;
+						text-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.15);
 					}
 
 					.logo-sub {
 						font-size: 20rpx;
-						color: #7f8c8d;
-						font-weight: 400;
-						letter-spacing: 1rpx;
-						margin-top: -2rpx;
-						opacity: 0.8;
+						color: rgba(255, 255, 255, 0.9);
+						font-weight: 500;
+						letter-spacing: 4rpx;
+						margin-top: 6rpx;
 					}
 				}
 			}
 		}
 
 		.store_info {
-			padding-right: 30rpx;
+			display: flex;
+			flex-direction: column;
+			gap: 16rpx;
 
-			.store_name {
-				color: black;
-				font-weight: bold;
-				font-size: 28rpx;
-				padding-left: 10rpx;
+			.store-header {
+				display: flex;
+				align-items: center;
+				gap: 12rpx;
+
+				.store_name {
+					color: #ffffff;
+					font-weight: 700;
+					font-size: 32rpx;
+					text-shadow: 0 2rpx 6rpx rgba(0, 0, 0, 0.2);
+				}
+			}
+
+			.store-bottom {
+				display: flex;
+				flex-direction: column;
+				gap: 8rpx;
+
+				.info-item {
+					display: flex;
+					align-items: center;
+					gap: 8rpx;
+					font-size: 24rpx;
+					color: rgba(255, 255, 255, 0.9);
+				}
 			}
 		}
 	}
 
+	.swiper {
+		margin: 25rpx 30rpx;
+		border-radius: 28rpx;
+		overflow: hidden;
+		box-shadow: 0 12rpx 32rpx rgba(255, 107, 107, 0.15);
+		border: 3rpx solid rgba(255, 255, 255, 0.8);
+	}
+
 	.notice {
 		padding: 0 30rpx;
+		margin: 0 30rpx 25rpx 30rpx;
+
+		:deep(.u-notice-bar) {
+			background: linear-gradient(135deg, #fff5f0 0%, #fff 100%);
+			border-radius: 16rpx;
+			border: 2rpx solid rgba(255, 107, 107, 0.2);
+			padding: 16rpx 24rpx;
+		}
 	}
 
 	.tabs {
 		padding: 0 30rpx;
+		background: #ffffff;
+		border-radius: 24rpx 24rpx 0 0;
+		box-shadow: 0 -4rpx 24rpx rgba(255, 107, 107, 0.08);
 	}
 
 	.dish-price {
-		color: #ca4545;
-		font-family: fantasy;
+		color: #ff6b6b;
+		font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial;
 	}
 
 	// 菜品容器
 	.cate-dish-container {
 		display: flex;
-		margin-top: 30rpx;
-		padding: 0 30rpx;
+		margin-top: 0;
+		padding: 25rpx 30rpx;
+		background: linear-gradient(180deg, #fff8f5 0%, #fff 100%);
+		min-height: calc(100vh - 400rpx);
 
 		// 左侧分类菜单
 		.cate-left {
 			flex: 1.2;
 			text-align: center;
-			background-color: #dddddd;
-			padding: 30rpx 0;
+			background: #ffffff;
+			padding: 25rpx 0;
 			max-width: 180rpx;
+			border-radius: 20rpx 0 0 20rpx;
+			box-shadow: 0 4rpx 16rpx rgba(255, 107, 107, 0.08);
 
 			.cate-item {
-				$h: 70rpx;
+				$h: 88rpx;
 				height: $h;
 				line-height: $h;
-				font-size: 25rpx;
-				color: #858586;
+				font-size: 28rpx;
+				color: #666;
 				padding: 0 15rpx;
+				transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+				position: relative;
+				margin: 8rpx 0;
 
 				&.selected {
-					background: #fff;
-					border-right: none;
-					font-size: 28rpx;
-					color: black;
-					font-weight: bold;
+					background: linear-gradient(135deg, #ff9a56 0%, #ff6b6b 100%);
+					color: #ffffff;
+					font-weight: 700;
 					position: relative;
+					border-radius: 0 44rpx 44rpx 0;
+					margin: 8rpx 15rpx;
+					padding: 0 22rpx;
+					box-shadow: 0 6rpx 16rpx rgba(255, 107, 107, 0.35);
 
 					&::before {
-						content: "";
+						content: '';
 						position: absolute;
+						left: 0;
 						top: 50%;
-						left: 0%;
 						transform: translateY(-50%);
-						width: 8rpx;
-						height: 70%;
-						border-radius: 0 10rpx 10rpx 0;
-						background-color: #ca4545;
+						width: 6rpx;
+						height: 40%;
+						background: rgba(255, 255, 255, 0.8);
+						border-radius: 0 3rpx 3rpx 0;
 					}
 				}
 			}
@@ -1226,30 +1310,69 @@
 		// 右侧对应分类菜品
 		.cate-content {
 			flex: 4;
-			margin-left: 15rpx;
+			margin-left: 20rpx;
+			padding: 25rpx;
+			background: #ffffff;
+			border-radius: 0 20rpx 20rpx 0;
+			box-shadow: 0 4rpx 16rpx rgba(255, 107, 107, 0.08);
 		}
 	}
 
 	.dish-item {
 		margin-bottom: 30rpx;
+		padding: 24rpx;
+		background: #ffffff;
+		border-radius: 20rpx;
+		box-shadow: 0 4rpx 16rpx rgba(255, 107, 107, 0.08);
+		transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+		border: 2rpx solid transparent;
+		display: flex;
+		gap: 20rpx;
+
+		&:active {
+			transform: translateY(-4rpx);
+			box-shadow: 0 8rpx 24rpx rgba(255, 107, 107, 0.15);
+			border-color: rgba(255, 107, 107, 0.2);
+		}
+
+		.dish-image {
+			flex-shrink: 0;
+			border-radius: 12rpx;
+			overflow: hidden;
+		}
 
 		.dish-info {
-			padding: 0 30rpx;
+			flex: 1;
+			display: flex;
+			flex-direction: column;
+			justify-content: space-between;
+			gap: 12rpx;
 
-			.dish-name {
-				font-size: 25rpx;
-				color: black;
-				font-weight: bold;
+			.dish-content {
+				.dish-name {
+					font-size: 30rpx;
+					color: #333;
+					font-weight: 700;
+					margin-bottom: 8rpx;
+					line-height: 1.4;
+				}
+
+				.dish-desc-tag {
+					font-size: 24rpx;
+					color: #999;
+					line-height: 1.6;
+				}
 			}
 
-			.dish-desc-tag {
-				font-size: 20rpx;
-				color: #8d8d8e86;
-			}
+			.dish-action {
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
 
-			.dish-number {
-				margin: 0 15rpx;
-				max-width: 80rpx;
+				.dish-number {
+					margin: 0 18rpx;
+					max-width: 80rpx;
+				}
 			}
 		}
 	}
@@ -1258,31 +1381,35 @@
 	.shopping-cart {
 		position: fixed;
 		z-index: 10076;
-		bottom: 20rpx;
+		bottom: 35rpx;
 		left: 50%;
-		// transform: translateX(-50%);
-		width: 85%;
-		min-height: 60rpx;
-		padding: 10rpx;
-		background-color: black;
-		border-radius: 50px;
-		transition: all 0.3s ease-in-out;
+		transform: translateX(-50%);
+		width: 90%;
+		min-height: 110rpx;
+		padding: 18rpx 24rpx;
+		background: linear-gradient(135deg, #ff9a56 0%, #ff6b6b 100%);
+		border-radius: 55rpx;
+		box-shadow: 0 12rpx 32rpx rgba(255, 107, 107, 0.35);
+		transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+		border: 3rpx solid rgba(255, 255, 255, 0.3);
 
 		.icon {
-			margin-right: 15rpx;
+			margin-right: 18rpx;
 
 			& text:first-child {
-				font-size: 125rpx;
+				font-size: 130rpx;
 				position: absolute;
-				top: -70%;
-				left: 15rpx;
+				top: -65%;
+				left: 24rpx;
+				filter: drop-shadow(0 6rpx 12rpx rgba(0, 0, 0, 0.25));
 			}
 		}
 
 		.total-price {
 			color: #fff;
-			margin-left: 160rpx;
-			font-family: fantasy;
+			margin-left: 170rpx;
+			font-weight: 700;
+			text-shadow: 0 2rpx 6rpx rgba(0, 0, 0, 0.2);
 		}
 	}
 
@@ -1291,94 +1418,124 @@
 		flex: 1;
 		max-height: 50rpx;
 		height: auto;
+		padding-bottom: 24rpx;
+		border-bottom: 3rpx solid rgba(255, 107, 107, 0.1);
 	}
 
 	.cart-dish-item {
 		display: flex;
 		max-height: 85px;
+		padding: 24rpx;
+		background: #ffffff;
+		border-radius: 16rpx;
+		margin-bottom: 18rpx;
+		box-shadow: 0 4rpx 12rpx rgba(255, 107, 107, 0.08);
+		border: 2rpx solid rgba(255, 107, 107, 0.05);
+		transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+		&:active {
+			transform: translateY(-2rpx);
+			box-shadow: 0 6rpx 16rpx rgba(255, 107, 107, 0.12);
+		}
 
 		.cart-dish-image {
-			margin-right: 25rpx;
+			margin-right: 24rpx;
+			border-radius: 12rpx;
+			overflow: hidden;
 		}
 
 		.cart-dish-info {
 			display: flex;
 			flex-direction: column;
 			justify-content: space-between;
+			flex: 1;
 
 			.dish-name {
-				font-weight: bold;
-				font-size: 28rpx;
+				font-weight: 700;
+				font-size: 30rpx;
 				margin-bottom: 10rpx;
+				color: #333;
 			}
 
 			.dish-desc {
-				font-size: 20rpx;
-				color: #ababab;
+				font-size: 24rpx;
+				color: #999;
 			}
 		}
 	}
 
 	// AI推荐模块样式
 	.ai-recommend-section {
-		margin: 20rpx;
-		padding: 20rpx;
-		background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
-		border-radius: 20rpx;
-		box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.05);
-		border: 1rpx solid #f0f0f0;
+		margin: 25rpx 30rpx;
+		padding: 28rpx;
+		background: linear-gradient(135deg, #fff8f5 0%, #ffffff 100%);
+		border-radius: 28rpx;
+		box-shadow: 0 6rpx 20rpx rgba(255, 107, 107, 0.1);
+		border: 2rpx solid rgba(255, 107, 107, 0.15);
 
 		.ai-input-container {
 			display: flex;
 			align-items: center;
-			margin-bottom: 20rpx;
-			gap: 20rpx;
+			margin-bottom: 28rpx;
+			gap: 18rpx;
 
 			.input-wrapper {
 				flex: 1;
 				display: flex;
 				align-items: center;
-				background: #f8f9fa;
-				border-radius: 25rpx;
-				padding: 0 20rpx;
-				border: 1rpx solid #e9ecef;
+				background: #ffffff;
+				border-radius: 35rpx;
+				padding: 0 28rpx;
+				border: 2rpx solid rgba(255, 107, 107, 0.15);
+				box-shadow: 0 4rpx 12rpx rgba(255, 107, 107, 0.08);
+				transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+				&:focus-within {
+					border-color: #ff6b6b;
+					box-shadow: 0 6rpx 16rpx rgba(255, 107, 107, 0.2);
+				}
 
 				.input-icon {
-					font-size: 28rpx;
-					margin-right: 15rpx;
-					color: #ca4545;
+					font-size: 36rpx;
+					margin-right: 18rpx;
+					background: linear-gradient(135deg, #ff9a56 0%, #ff6b6b 100%);
+					-webkit-background-clip: text;
+					-webkit-text-fill-color: transparent;
+					background-clip: text;
 				}
 
 				.ai-input {
 					flex: 1;
-					height: 80rpx;
+					height: 88rpx;
 					font-size: 28rpx;
-					color: #303133;
+					color: #333;
 					background: transparent;
 					border: none;
 					outline: none;
 
 					&::placeholder {
-						color: #909399;
+						color: #999;
 						font-size: 26rpx;
 					}
 				}
 			}
 
 			.recommend-btn {
-				height: 80rpx;
-				padding: 0 30rpx;
-				background: #ca4545;
+				height: 88rpx;
+				padding: 0 40rpx;
+				background: linear-gradient(135deg, #ff9a56 0%, #ff6b6b 100%);
 				color: white;
 				border: none;
-				border-radius: 25rpx;
-				font-size: 28rpx;
-				font-weight: bold;
+				border-radius: 35rpx;
+				font-size: 30rpx;
+				font-weight: 700;
 				cursor: pointer;
-				transition: all 0.3s ease;
+				transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+				box-shadow: 0 6rpx 16rpx rgba(255, 107, 107, 0.3);
 
-				&:hover {
-					background: #b73e3e;
+				&:active {
+					transform: scale(0.95);
+					box-shadow: 0 4rpx 10rpx rgba(255, 107, 107, 0.25);
 				}
 
 				&.loading {
@@ -1395,12 +1552,15 @@
 
 		.ai-recommend-results {
 			.results-header {
-				margin-bottom: 20rpx;
+				margin-bottom: 24rpx;
 
 				.results-title {
-					font-size: 28rpx;
-					font-weight: bold;
-					color: #303133;
+					font-size: 30rpx;
+					font-weight: 700;
+					color: #333;
+					padding-left: 12rpx;
+					border-left: 8rpx solid #ff6b6b;
+					line-height: 1.2;
 				}
 			}
 
@@ -1409,28 +1569,36 @@
 
 				.recommend-list {
 					display: flex;
-					gap: 20rpx;
+					gap: 24rpx;
 
 					.recommend-item {
 						display: inline-block;
-						width: 280rpx;
+						width: 290rpx;
 						background: #ffffff;
-						border-radius: 15rpx;
-						padding: 20rpx;
-						box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.08);
-						border: 1rpx solid #f5f5f5;
+						border-radius: 20rpx;
+						padding: 24rpx;
+						box-shadow: 0 6rpx 16rpx rgba(255, 107, 107, 0.08);
+						border: 2rpx solid rgba(255, 107, 107, 0.1);
+						transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+						&:active {
+							transform: translateY(-6rpx);
+							box-shadow: 0 10rpx 24rpx rgba(255, 107, 107, 0.15);
+						}
 
 						.recommend-image {
-							margin-bottom: 15rpx;
+							margin-bottom: 18rpx;
+							border-radius: 14rpx;
+							overflow: hidden;
 						}
 
 						.recommend-info {
 							.dish-name {
 								display: block;
-								font-size: 28rpx;
-								font-weight: bold;
-								color: #303133;
-								margin-bottom: 8rpx;
+								font-size: 30rpx;
+								font-weight: 700;
+								color: #333;
+								margin-bottom: 10rpx;
 								overflow: hidden;
 								text-overflow: ellipsis;
 								white-space: nowrap;
@@ -1438,12 +1606,12 @@
 
 							.recommend-reason {
 								display: block;
-								font-size: 22rpx;
-								color: #909399;
-								margin-bottom: 15rpx;
-								line-height: 1.4;
-								white-space: normal; /* 允许换行 */
-								word-wrap: break-word; /* 断行 */
+								font-size: 24rpx;
+								color: #999;
+								margin-bottom: 18rpx;
+								line-height: 1.6;
+								white-space: normal;
+								word-wrap: break-word;
 							}
 
 							.price-action {
@@ -1452,9 +1620,12 @@
 								align-items: center;
 
 								.price {
-									font-size: 30rpx;
-									font-weight: bold;
-									color: #ca4545;
+									font-size: 32rpx;
+									font-weight: 700;
+									background: linear-gradient(135deg, #ff9a56 0%, #ff6b6b 100%);
+									-webkit-background-clip: text;
+									-webkit-text-fill-color: transparent;
+									background-clip: text;
 								}
 							}
 						}
